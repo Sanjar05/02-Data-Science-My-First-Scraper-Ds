@@ -12,18 +12,16 @@ def extract(page):
     soup = BeautifulSoup(page.text, 'html.parser')
     rs = soup.find_all("article", class_="Box-row")
     for r in rs:
-        try:
-            iteam = []
-        except:
-            r_h1 = None
-        r_h1 = r.select_one("h2.h3.lh-condensed")
-        stars = r.select_one("span.d-inline-block.float-sm-right").text.strip()
-        iteam.append(stars)
-        name = r.select_one("img.avatar.mb-1.avatar-user")["alt"]
-        iteam.append(name)
-        re_name = r_h1.select_one("a")["href"]
-        iteam.append(re_name)
-        res.append(iteam)
+        iteam = []
+        r_h1 = r.select_one("h1.h3.lh-condensed")
+        if r_h1:
+            stars = r.select_one("span.d-inline-block.float-sm-right").text.strip()
+            iteam.append(stars)
+            name = r.select_one("img.avatar.mb-1.avatar-user")["alt"]
+            iteam.append(name)
+            re_name = r_h1.select_one("a")["href"]
+            iteam.append(re_name)
+            res.append(iteam)
 
         #print(bun)
     return res
